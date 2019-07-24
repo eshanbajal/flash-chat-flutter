@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/screens/chat_screen.dart';
+
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,15 +22,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+            Flexible(
+              child: Hero(
+                tag: 'logo',
+                child: Container(
+                  height: 200.0,
+                  child: Image.asset('images/logo.png'),
+                ),
+              ),
             ),
             SizedBox(
               height: 48.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black, fontSize: 14.0),
               onChanged: (value) {
+                email = value;
                 //Do something with the user input.
               },
               decoration: InputDecoration(
@@ -48,7 +62,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.emailAddress,
+              obscureText: true,
+              style: TextStyle(color: Colors.black,
+                  fontSize: 14.0),
               onChanged: (value) {
+                password = value;
                 //Do something with the user input.
               },
               decoration: InputDecoration(
@@ -78,8 +98,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
-                  onPressed: () {
-                    //Implement registration functionality.
+                  onPressed: () async {
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: email, password: password);
+                      if (newUser != null) {
+                        Navigator.pushNamed(context, 'chat_screen');
+                      }
+                      //Implement registration functionality.
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   minWidth: 200.0,
                   height: 42.0,
