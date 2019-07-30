@@ -4,6 +4,7 @@ import 'package:flash_chat/screens/chat_screen.dart';
 
 
 class LoginScreen extends StatefulWidget {
+  static String id = 'login_screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

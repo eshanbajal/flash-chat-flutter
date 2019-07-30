@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final _firestore = Firestore.instance;
 
 class ChatScreen extends StatefulWidget {
+
+  static String id = 'chat_screen';
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }

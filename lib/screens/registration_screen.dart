@@ -4,6 +4,8 @@ import 'package:flash_chat/screens/chat_screen.dart';
 
 
 class RegistrationScreen extends StatefulWidget {
+
+  static String id = 'registation_screen';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
